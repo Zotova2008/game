@@ -1,8 +1,12 @@
 tikTakBoom = {
     init(
         tasks,
+        gamePlayers,
+
         timerField,
+        timeSetting,
         gameStatusField,
+
         textFieldQuestion,
         textFieldAnswer1,
         textFieldAnswer2,
@@ -10,11 +14,17 @@ tikTakBoom = {
         textFieldAnswer4,
         textFieldAnswer5
     ) {
-        this.boomTimer = 30;
+        this.boomTimer = timeSetting;
+        this.superGame = false;
         this.countOfPlayers = 2;
         this.tasks = JSON.parse(tasks);
 
         this.timerField = timerField;
+        this.timeSetting = timeSetting;
+        this.gamePlayers = gamePlayers;
+        this.players = undefined;
+        this.currentPlayer = undefined;
+        this.playerTimer = undefined;
         this.gameStatusField = gameStatusField;
         this.textFieldQuestion = textFieldQuestion;
         this.textFieldAnswer1 = textFieldAnswer1;
@@ -23,7 +33,7 @@ tikTakBoom = {
         this.textFieldAnswer4 = textFieldAnswer4;
         this.textFieldAnswer5 = textFieldAnswer5;
 
-        this.needRightAnswers = 3;
+        this.needRightAnswers = 19;
     },
 
     run() {
@@ -51,8 +61,10 @@ tikTakBoom = {
         if (this.currentTask[value].result) {
             this.gameStatusField.innerText = 'Верно!';
             this.rightAnswers += 1;
+            this.boomTimer += 5;
         } else {
             this.gameStatusField.innerText = 'Неверно!';
+            this.boomTimer -= 5;
         }
         if (this.rightAnswers < this.needRightAnswers) {
             if (this.tasks.length === 0) {
@@ -69,6 +81,27 @@ tikTakBoom = {
         this.textFieldAnswer3.removeEventListener('click', answer3);
         this.textFieldAnswer4.removeEventListener('click', answer4);
         this.textFieldAnswer5.removeEventListener('click', answer5);
+    },
+
+    startGame(number = 0) {
+        if (this.players === undefined) {
+            this.players = creatDataPlayers(this.gamePlayers, this.boomTimer);
+        }
+
+        if (this.superGame === false) {
+            this.boomTimer = parseInt(this.timeSetting);
+        }
+
+        if (this.superGame === true) {
+            for (player of this.players) {
+                player.timer = this.boomTimer;
+                player.errors = 0;
+                player.score = 0;
+            }
+        }
+
+        this.currentPlayer = number;
+        this.startTimer();
     },
 
     printQuestion(task) {
@@ -128,4 +161,15 @@ tikTakBoom = {
             }
         }
     },
+    startTimer() {
+        let timeTraining = 3;
+        this.timerField.innerText = `3`;
+        this.gameStatusField.innerText = `Ход ${this.players[this.currentPlayer].name} через`;
+        let a = this;
+        const startTimer = setInterval(function () {
+            timeToPlay--;
+            this.timerField.innerText = `${timeToPlay}`;
+        }, 1000);
+
+    }
 }

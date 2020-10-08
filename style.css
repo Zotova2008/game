@@ -1,23 +1,83 @@
 body {
-    font-family: 'Share Tech Mono', monospace;
+  font-family: "Share Tech Mono", monospace;
 }
 
-.timer-output{
-    width: 200px;
-    background: #222;
-    color: darkred;
-    padding: 16px 8px;
-    font-size: 64px;
-    text-align: center;
-    line-height: 1;
-    user-select: none;
+.row h1 {
+  margin: 30px auto;
+
+  text-align: center;
 }
 
-.timer-output-wrapper{
-    width: calc(100% - 24px);
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    margin: 12px;
+.timer-output {
+  width: 200px;
+  padding: 16px 8px;
+
+  font-size: 64px;
+  line-height: 1;
+  text-align: center;
+  color: darkred;
+
+  background: #222222;
+  border: 3px solid darkred;
+  border-radius: 10px;
+
+  user-select: none;
+}
+
+.timer-output-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  width: calc(100% - 24px);
+  margin: 12px;
+}
+
+.game__start,
+.game__end {
+  display: block;
+  width: 200px;
+  margin: auto;
+  padding: 16px 8px;
+
+  font-size: 30px;
+  text-align: center;
+  color: darkred;
+
+  background: #222222;
+  border: 3px solid darkred;
+  border-radius: 10px;
+}
+
+.game__end {
+  display: none;
+}
+
+.game__start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game--active .game__start-container {
+  display: none;
+}
+
+.game__start-container input {
+  width: 100px;
+  margin-bottom: 30px;
+}
+
+.game--active .game__end {
+  display: block;
+}
+
+.game__container {
+  display: none;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.game--active .game__container {
+  display: block;
 }
