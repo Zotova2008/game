@@ -52,7 +52,6 @@ tikTakBoom = {
 
     turnOn() {
         this.gameStatusField.innerText += ` Вопрос игроку №${this.state}`;
-        startTimer();
         const taskNumber = randomIntNumber(this.tasks.length - 1);
         this.printQuestion(this.tasks[taskNumber]);
 
@@ -65,10 +64,10 @@ tikTakBoom = {
         if (this.currentTask[value].result) {
             this.gameStatusField.innerText = 'Верно!';
             this.rightAnswers += 1;
-            this.boomTimer += 5;
+            this.boomTimer.value += 5;
         } else {
             this.gameStatusField.innerText = 'Неверно!';
-            this.boomTimer -= 5;
+            this.boomTimer.value -= 5;
         }
         if (this.rightAnswers < this.needRightAnswers) {
             if (this.tasks.length === 0) {
@@ -89,16 +88,16 @@ tikTakBoom = {
 
     startGame(number = 0) {
         if (this.players === undefined) {
-            this.players = creatDataPlayers(this.gamePlayers, this.boomTimer);
+            this.players = creatDataPlayers(this.gamePlayers, this.boomTimer.value);
         }
 
         if (this.superGame === false) {
-            this.boomTimer = parseInt(this.timeSetting);
+            this.boomTimer.value = parseInt(this.timeSetting);
         }
 
         if (this.superGame === true) {
             for (player of this.players) {
-                player.timer = this.boomTimer;
+                player.timer = this.boomTimer.value;
                 player.errors = 0;
                 player.score = 0;
             }
@@ -147,14 +146,14 @@ tikTakBoom = {
 
     timer() {
         if (this.state) {
-            this.boomTimer -= 1;
-            let sec = this.boomTimer % 60;
-            let min = (this.boomTimer - sec) / 60;
+            this.boomTimer.value -= 1;
+            let sec = this.boomTimer.value % 60;
+            let min = (this.boomTimer.value - sec) / 60;
             sec = (sec >= 10) ? sec : '0' + sec;
             min = (min >= 10) ? min : '0' + min;
             this.timerField.innerText = `${min}:${sec}`;
 
-            if (this.boomTimer > 0) {
+            if (this.boomTimer.value > 0) {
                 setTimeout(
                     () => {
                         this.timer()

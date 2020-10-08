@@ -19,7 +19,7 @@ window.onload = function () {
         document.querySelector('#timerField'),
 
         // Время на игру
-        document.querySelector('#timeSetting').value,
+        document.querySelector('#timeSetting'),
         // Статус
         document.querySelector('#gameStatusField'),
 
